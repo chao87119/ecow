@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>NoNaka-碳排放計算機</title>
+  <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css'>
+<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css'><link rel="stylesheet" href="./style.css">
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<amount id="app" :class="{isCartOpen: isCartOpen}">
+  <div class="apptitle">碳排放計算機</div>
+  <div class="back" @click="backward()">&lt;</div>
+  <div class="movie" @wheel.prevent="wheel($event)">
+    <div class="cards"> 
+      <div class="card fadeIn animated" v-if="food" v-for="movie in movies">
+        <div class="left zoomIn animated">
+          <div class="cover" :style="bgcss(movie.cover)"></div>
+        </div>
+        <div class="right">
+          <h2>{{ movie.name }}</h2>
+          <h4>{{ movie.type }}</h4>
+          <p v-html="movie.description"></p>
+          <div class="price" v-if="movie.name!='其他食物' &amp;&amp; movie.name!='其他電器' &amp;&amp; movie.name!='其他交通工具'">{{movie.price}}kg/g</div>
+          <input class="w60" v-if="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'" v-model.number="carbon" type="number"/>
+          <h4 class="kg" v-if="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'" v-model.number="carbon" type="number">kg/g</h4>
+          <input class="w80" v-model.number="movie.amount" type="number" placeholder="請輸入幾克"/>
+          <button class="add" v-if="!movie.add" @click="addCart(movie,$event)">+ Add To My Cart</button>
+        </div>
+      </div>
+      <div class="card card1 fadeIn animated" v-if="appli" v-for="movie in appliance">
+        <div class="left zoomIn animated">
+          <div class="cover" :style="bgcss(movie.cover)"></div>
+        </div>
+        <div class="right">
+          <h2>{{ movie.name }}</h2>
+          <h4 v-html="movie.type"></h4>
+          <p v-html="movie.description"></p>
+          <div class="price" v-if="movie.name!='其他食物' &amp;&amp; movie.name!='其他電器' &amp;&amp; movie.name!='其他交通工具'">{{movie.price}}kg/yr</div>
+          <input class="w60" v-if="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'" v-model.number="carbon" type="number"/>
+          <h4 class="kg" v-if="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'" v-model.number="carbon" type="number">kg/yr</h4>
+          <input class="w80" v-model.number="movie.amount" type="number" placeholder="請輸入幾個"/>
+          <button class="add" v-if="!movie.add" @click="addCart(movie,$event)">+ Add To My Cart   </button>
+        </div>
+      </div>
+      <div class="card fadeIn animated" v-if="tra" v-for="movie in traffic">
+        <div class="left zoomIn animated">
+          <div class="cover" :style="bgcss(movie.cover)"></div>
+        </div>
+        <div class="right">
+          <h2>{{ movie.name }}</h2>
+          <h4>{{ movie.type }}</h4>
+          <p v-html="movie.description"></p>
+          <div class="price" v-if="movie.name!='其他食物' &amp;&amp; movie.name!='其他電器' &amp;&amp; movie.name!='其他交通工具'">{{movie.price}}kg</div>
+          <input class="w60" v-if="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'" v-model.number="carbon" type="number"/>
+          <h4 class="kg" v-if="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'" v-model.number="carbon" type="number">kg</h4>
+          <input class="w80" v-if="movie.name!='柴油' &amp;&amp; movie.name!='汽油'" v-model.number="movie.amount" type="number" placeholder="請輸入公里數"/>
+          <input class="w80" v-if="movie.name=='柴油' || movie.name=='汽油'" v-model.number="movie.amount" type="number" placeholder="請輸入L"/>
+          <button class="add" v-if="!movie.add" @click="addCart(movie,$event)">+ Add To My Cart                 </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="forwar" @click="forward()">>        </div>
+  <div class="button">
+    <button class="b1" @click="food=true,appli=false,tra=false">食品</button>
+    <button class="b2" @click="food=false,appli=true,tra=false">電器</button>
+    <button class="b3" @click="food=false,appli=false,tra=true">交通    </button>
+  </div>
+  <div class="fixed-control" @click="isCartOpen=!isCartOpen">
+    <p><i class="fa fa-shopping-cart"></i><span>{{cart.length}}</span></p>
+  </div>
+  <div class="control" :class="{show: isCartOpen}">
+    <div class="panel animated fadeIn"><i class="fa fa-shopping-cart" style="font-size: 40px;"></i>
+      <h2>My Cart</h2>
+      <ul>
+        <li v-for="(movie,mid) in cart" v-if="mid&lt;5 &amp;&amp; p1==true">
+          <div class="thumbnail" :style="bgcss(movie.cover)"></div>
+          <h3>{{movie.name}}
+            <div class="price" v-if="movie.name!='其他食物' &amp;&amp; movie.name!='其他電器' &amp;&amp; movie.name!='其他交通工具'">{{(movie.price*movie.amount).toFixed(2)}}kg</div>
+            <div class="price" v-else="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'">{{(carbon*movie.amount).toFixed(2)}}kg</div>
+            <div class="remove" @click="remove(movie,mid)">-</div>
+          </h3>
+        </li>
+        <li v-for="(movie,mid) in cart" v-if="mid&gt;4 &amp;&amp; mid&lt;10 &amp;&amp; p2==true">
+          <div class="thumbnail" :style="bgcss(movie.cover)"></div>
+          <h3>{{movie.name}}
+            <div class="price" v-if="movie.name!='其他食物' &amp;&amp; movie.name!='其他電器' &amp;&amp; movie.name!='其他交通工具'">{{(movie.price*movie.amount).toFixed(2)}}kg</div>
+            <div class="price" v-else="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'">{{(carbon*movie.amount).toFixed(2)}}kg</div>
+            <div class="remove" @click="remove(movie,mid)">-</div>
+          </h3>
+        </li>
+        <li v-for="(movie,mid) in cart" v-if="mid&gt;9 &amp;&amp; mid&lt;15 &amp;&amp; p3==true">
+          <div class="thumbnail" :style="bgcss(movie.cover)"></div>
+          <h3>{{movie.name}}
+            <div class="price" v-if="movie.name!='其他食物' &amp;&amp; movie.name!='其他電器' &amp;&amp; movie.name!='其他交通工具'">{{(movie.price*movie.amount).toFixed(2)}}kg</div>
+            <div class="price" v-else="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'">{{(carbon*movie.amount).toFixed(2)}}kg</div>
+            <div class="remove" @click="remove(movie,mid)">- </div>
+          </h3>
+        </li>
+        <li v-for="(movie,mid) in cart" v-if="mid&gt;14 &amp;&amp; mid&lt;20 &amp;&amp; p4==true">
+          <div class="thumbnail" :style="bgcss(movie.cover)"></div>
+          <h3>{{movie.name}}
+            <div class="price" v-if="movie.name!='其他食物' &amp;&amp; movie.name!='其他電器' &amp;&amp; movie.name!='其他交通工具'">{{(movie.price*movie.amount).toFixed(2)}}kg</div>
+            <div class="price" v-else="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'">{{(carbon*movie.amount).toFixed(2)}}kg</div>
+            <div class="remove" @click="remove(movie,mid)">-  </div>
+          </h3>
+        </li>
+        <li v-for="(movie,mid) in cart" v-if="mid&gt;19 &amp;&amp; mid&lt;25 &amp;&amp; p5==true">
+          <div class="thumbnail" :style="bgcss(movie.cover)"></div>
+          <h3>{{movie.name}}
+            <div class="price" v-if="movie.name!='其他食物' &amp;&amp; movie.name!='其他電器' &amp;&amp; movie.name!='其他交通工具'">{{(movie.price*movie.amount).toFixed(2)}}kg</div>
+            <div class="price" v-else="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'">{{(carbon*movie.amount).toFixed(2)}}kg</div>
+            <div class="remove" @click="remove(movie,mid)">-    </div>
+          </h3>
+        </li>
+        <li v-for="(movie,mid) in cart" v-if="mid&gt;24 &amp;&amp; mid&lt;30 &amp;&amp; p6==true">
+          <div class="thumbnail" :style="bgcss(movie.cover)"></div>
+          <h3>{{movie.name}}
+            <div class="price" v-if="movie.name!='其他食物' &amp;&amp; movie.name!='其他電器' &amp;&amp; movie.name!='其他交通工具'">{{(movie.price*movie.amount).toFixed(2)}}kg</div>
+            <div class="price" v-else="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'">{{(carbon*movie.amount).toFixed(2)}}kg</div>
+            <div class="remove" @click="remove(movie,mid)">-     </div>
+          </h3>
+        </li>
+        <li v-for="(movie,mid) in cart" v-if="mid&gt;29 &amp;&amp; mid&lt;35 &amp;&amp; p7==true">
+          <div class="thumbnail" :style="bgcss(movie.cover)"></div>
+          <h3>{{movie.name}}
+            <div class="price" v-if="movie.name!='其他食物' &amp;&amp; movie.name!='其他電器' &amp;&amp; movie.name!='其他交通工具'">{{(movie.price*movie.amount).toFixed(2)}}kg</div>
+            <div class="price" v-else="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'">{{(carbon*movie.amount).toFixed(2)}}kg</div>
+            <div class="remove" @click="remove(movie,mid)">-     </div>
+          </h3>
+        </li>
+        <li v-for="(movie,mid) in cart" v-if="mid&gt;34 &amp;&amp; mid&lt;40 &amp;&amp; p8==true">
+          <div class="thumbnail" :style="bgcss(movie.cover)"></div>
+          <h3>{{movie.name}}
+            <div class="price" v-if="movie.name!='其他食物' &amp;&amp; movie.name!='其他電器' &amp;&amp; movie.name!='其他交通工具'">{{(movie.price*movie.amount).toFixed(2)}}kg</div>
+            <div class="price" v-else="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'">{{(carbon*movie.amount).toFixed(2)}}kg</div>
+            <div class="remove" @click="remove(movie,mid)">-         </div>
+          </h3>
+        </li>
+        <li v-for="(movie,mid) in cart" v-if="mid&gt;39 &amp;&amp; mid&lt;45 &amp;&amp; p9==true">
+          <div class="thumbnail" :style="bgcss(movie.cover)"></div>
+          <h3>{{movie.name}}
+            <div class="price" v-if="movie.name!='其他食物' &amp;&amp; movie.name!='其他電器' &amp;&amp; movie.name!='其他交通工具'">{{(movie.price*movie.amount).toFixed(2)}}kg</div>
+            <div class="price" v-else="movie.name=='其他食物' || movie.name=='其他電器' || movie.name=='其他交通工具'">{{(carbon*movie.amount).toFixed(2)}}kg</div>
+            <div class="remove" @click="remove(movie,mid)">-             </div>
+          </h3>
+        </li>
+        <li v-if="!cart.length"> 
+          <h3>Your cart is empty! :(</h3>
+        </li>
+      </ul>
+      <hr/>
+      <button @click="p1=true,p2=false,p3=false,p4=false,p5=false,p6=false,p7=false,p8=false,p9=false">1</button>
+      <button @click="p1=false,p2=true,p3=false,p4=false,p5=false,p6=false,p7=false,p8=false,p9=false" v-if="cart.length&gt;5"> 2</button>
+      <button @click="p1=false,p2=false,p3=true,p4=false,p5=false,p6=false,p7=false,p8=false,p9=false" v-if="cart.length&gt;10">3</button>
+      <button @click="p1=false,p2=false,p3=true,p4=true,p5=false,p6=false,p7=false,p8=false,p9=false" v-if="cart.length&gt;15">4</button>
+      <button @click="p1=false,p2=false,p3=false,p4=false,p5=true,p6=false,p7=false,p8=false,p9=false" v-if="cart.length&gt;20">5</button>
+      <button @click="p1=false,p2=false,p3=false,p4=false,p5=false,p6=true,p7=false,p8=false,p9=false" v-if="cart.length&gt;25">6</button>
+      <button @click="p1=false,p2=false,p3=false,p4=false,p5=false,p6=false,p7=true,p8=false,p9=false" v-if="cart.length&gt;30">7</button>
+      <button @click="p1=false,p2=false,p3=false,p4=false,p5=false,p6=false,p7=false,p8=true,p9=false" v-if="cart.length&gt;35">8</button>
+      <button @click="p1=false,p2=false,p3=false,p4=false,p5=false,p6=false,p7=false,p8=false,p9=true" v-if="cart.length&gt;40">9</button>
+      <h2>{{(totalPrice).toFixed(2)}}kg</h2>
+    </div>
+  </div>
+  <div class="buybox" v-if="currentMovie" :style="bgcss(currentMovie &amp;&amp; currentMovie.cover)"></div>
+</amount>
+<!-- partial -->
+  <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.13/vue.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/gsap/latest/TweenMax.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js'></script><script  src="./script.js"></script>
+
+</body>
+</html>
