@@ -15,7 +15,7 @@
     <div class="cards"> 
       <div class="card fadeIn animated" v-if="food" v-for="movie in movies">
         <div class="left zoomIn animated">
-          <div class="cover" :style="bgcss(movie.cover)"></div>
+          <img class="cover" v-bind:src="movie.cover"/>
         </div>
         <div class="right">
           <h2>{{ movie.name }}</h2>
@@ -30,7 +30,7 @@
       </div>
       <div class="card card1 fadeIn animated" v-if="appli" v-for="movie in appliance">
         <div class="left zoomIn animated">
-          <div class="cover" :style="bgcss(movie.cover)"></div>
+          <img class="cover" v-bind:src="movie.cover"/>
         </div>
         <div class="right">
           <h2>{{ movie.name }}</h2>
@@ -45,7 +45,7 @@
       </div>
       <div class="card fadeIn animated" v-if="tra" v-for="movie in traffic">
         <div class="left zoomIn animated">
-          <div class="cover" :style="bgcss(movie.cover)"></div>
+          <img class="cover" v-bind:src="movie.cover"/>
         </div>
         <div class="right">
           <h2>{{ movie.name }}</h2>
