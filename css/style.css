@@ -14,7 +14,7 @@ a:hover {text-decoration: underline}
 .enter_wrap .wrap_top{width: 100%;position: absolute;top:10%;}
 .enter_wrap .wrap_top .top_img{width: 100%;margin: 0 auto;}
 .enter_wrap .wrap_center{width: 110%;position: absolute;bottom:50%;)}
-.enter_wrap .wrap_center .enter_btn{width:15%;margin:0 auto;border-radius:999em;text-align: center;font-size: 1.8rem; line-height: 44px; border:3px #282940 solid;}
+.enter_wrap .wrap_center .enter_btn{width:15%;margin:0 auto;border-radius:999em;text-align: center;font-size: 1.8rem; line-height: 44px; border:3px #282940 solid;min-width:100px}
 .enter_wrap .wrap_bottom{width: 100%;position: absolute;bottom: 4%;}
 .enter_wrap .wrap_bottom .bottom_img{width: 60%;margin:0 auto;}
 .topic_wrap{display:none;width: 100%;height: 100%;background: url(../uploads/idea-1880978_1920.jpg) no-repeat;background-size: 100% 100%;}
@@ -23,7 +23,11 @@ a:hover {text-decoration: underline}
 .topic_wrap .wrap_top .topic_no{height: 40px;width: 40px; line-height: 40px; text-align: center;font-size: 1.2rem; border-radius: 20px;background: yellow repeat-x;background-size: 1px 42px; margin:0 auto;}
 .topic_wrap .wrap_top .topic_no .curr_no{font-size: 1.6rem;}
 .topic_wrap .wrap_top1{width: 100%;position: absolute;top:20%;}
-.topic_wrap .wrap_top1 .topic_title{width: 45%;height: 80%;margin:0 auto; background: url(../uploads/145933.jpg) repeat-x;background-size: 1px 34px;text-align: center;font-size: 2.6rem;color: #ffffa9;}
+
+.topic_wrap .wrap_top1 .topic_title{width: 45%;height: 80%;margin:0 auto; background: linear-gradient(to bottom, #606c88 8%,#5d6068 23%,#5d6068 77%,#606c88 93%);background-size: 1px 34px;text-align: center;font-size: 1.5rem;color: #ffffa9;}
+@media screen and (min-width: 1024px){
+    .topic_wrap .wrap_top1 .topic_title{font-size: 2.6rem;}
+}
 .topic_wrap .wrap_center{width: 100%;position: absolute;top:34%;}
 .topic_wrap .wrap_center .topic_option{width: 80%;margin:0 auto; text-align: center;display:table;}
 .topic_wrap .wrap_center .topic_option .option_item{width: 100%;height:54px;vertical-align: middle;border-radius: 6px; margin-bottom: 10px; background: url(../images/topic_btn.png) repeat-x;background-size: 1px 54px; font-size: 1.3rem;;border:1px #282940 solid;padding:0 10px;}

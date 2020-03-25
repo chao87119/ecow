@@ -28,7 +28,19 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="css/custom.css">
 	<script src="js/modernizr.js"></script> <!-- Modernizr -->
-    
+    <style>
+        .tab{
+            font-size: 18px;font-family: serif;color: black;font;text-align: center;background-color: beige;
+        }
+        .tab.tab2{
+            transform: translateX(-4.5%);
+        }
+        @media screen and (max-width: 520px){
+            .tab{
+              font-size: 12px;  
+            }
+        }
+    </style>
     
     <link href="js/jquery-ui/jquery-ui.min.css" rel="stylesheet" type="text/css" media="all" />
     <link href="js/jquery-ui/jquery-ui.structure.min.css" rel="stylesheet" type="text/css" media="all" />
@@ -255,7 +267,7 @@
           </svg>  
             </div>          
 <!--    </div>-->
-    <div id="services" class="section lb">
+    <div id="services" class="section lb c1">
 		<div class="container">
 			<div class="section-title text-center  hi">
                 <h3>食物碳足跡</h3>
@@ -266,7 +278,7 @@
                     <div class="container">
                         <div class="section-title text-center">
                             <center>
-                                <table border="1" width="700" style="font-size: 18px;font-family: serif;color: black;font;text-align: center;background-color: beige">
+                                <table class="tab" border="1" width="100%" >
                                     <tr>
                                         <th>食物種類</th>
                                         <th>排放係數(kg/kg)</th>
@@ -326,7 +338,7 @@
                     <div class="container">
                         <div class="section-title text-center">
                             <center>
-                                <table border="1" width="1000" style="font-size: 18px;font-family: serif;color: black;font;text-align: center;background-color: beige">
+                                <table class="tab tab2" border="1" width="110%">
                                     <tr>
                                         <th>電器種類</th>
                                         <th>消耗電力(W)</th>
@@ -535,7 +547,7 @@
                     <div class="container">
                         <div class="section-title text-center">
                             <center>
-                                <table border="1" width="500" style="font-size: 18px;font-family: serif;color: black;font;text-align: center;background-color: beige">
+                                <table class="tab" border="1" width="100%" >
                                     <tr>
                                         <th>交通工具</th>
                                         <th>單位</th>

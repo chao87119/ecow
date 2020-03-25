@@ -40,7 +40,7 @@ html, body {
   color: white;
   font-size: 50px;
   position: relative;
-  top: 300px;
+  top: 48%;
   margin: 20px;
 }
 .forwar:hover {
@@ -53,7 +53,7 @@ html, body {
   color: white;
   font-size: 50px;
   position: relative;
-  top: 300px;
+  top: 48%;
   margin: 20px;
   z-index: 1000;
 }
@@ -304,13 +304,13 @@ html, body {
 }
 
 .button {
-  position: fixed;
+  position: fixed;    
   right: 100px;
   top: 40px;
 }
 .button .b1 {
   font-family: 微軟正黑體;
-  font-size: 16px;
+  font-size: 14px;
   width: 50px;
   height: 30px;
   color: white;
@@ -324,7 +324,7 @@ html, body {
 }
 .button .b2 {
   font-family: 微軟正黑體;
-  font-size: 16px;
+  font-size: 14px;
   width: 50px;
   height: 30px;
   color: white;
@@ -338,7 +338,7 @@ html, body {
 }
 .button .b3 {
   font-family: 微軟正黑體;
-  font-size: 16px;
+  font-size: 14px;
   width: 50px;
   height: 30px;
   color: white;
@@ -348,19 +348,5 @@ html, body {
   border: none;
 }
 .button .b3:hover {
-  color: #FFDC44;
-}
-.button .b4 {
-  font-family: 微軟正黑體;
-  font-size: 16px;
-  width: 50px;
-  height: 30px;
-  color: white;
-  background-color: #658EF7;
-  margin-right: 10px;
-  border-radius: 50%;
-  border: none;
-}
-.button .b4:hover {
   color: #FFDC44;
 }
