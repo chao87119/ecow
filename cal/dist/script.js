@@ -363,7 +363,7 @@ var vm = new Vue({
     "name": "高鐵",
     "amount":"",      
     "type": "1KM",
-    "cover": "/cal/img/hsr.jpg",
+    "cover": "/ecow/cal/img/hsr.jpg",
     "description": "碳排放量:",
     "price": 0.05,
     "open": false
