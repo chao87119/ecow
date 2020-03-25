@@ -311,7 +311,7 @@ html, body {
 .button .b1 {
   font-family: 微軟正黑體;
   font-size: 1rem;
-  min-width: 50px;
+  width: 50px;
   height: 30px;
   color: white;
   background-color: #658EF7;
@@ -325,7 +325,7 @@ html, body {
 .button .b2 {
   font-family: 微軟正黑體;
   font-size: 1rem;
-  min-width: 50px;
+  width: 50px;
   height: 30px;
   color: white;
   background-color: #658EF7;
@@ -339,7 +339,7 @@ html, body {
 .button .b3 {
   font-family: 微軟正黑體;
   font-size: 1rem;
-  min-width: 50px;
+  width: 50px;
   height: 30px;
   color: white;
   background-color: #658EF7;
