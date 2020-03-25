@@ -310,8 +310,8 @@ html, body {
 }
 .button .b1 {
   font-family: 微軟正黑體;
-  font-size: 14px;
-  width: 50px;
+  font-size: 10%;
+  min-width: 50px;
   height: 30px;
   color: white;
   background-color: #658EF7;
@@ -324,7 +324,7 @@ html, body {
 }
 .button .b2 {
   font-family: 微軟正黑體;
-  font-size: 14px;
+  font-size: 10%;
   width: 50px;
   height: 30px;
   color: white;
@@ -338,7 +338,7 @@ html, body {
 }
 .button .b3 {
   font-family: 微軟正黑體;
-  font-size: 14px;
+  font-size: 10%;
   width: 50px;
   height: 30px;
   color: white;
